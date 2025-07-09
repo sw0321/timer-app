@@ -9,7 +9,9 @@ interface TimerProps {
 }
 
 export default function Timer({ duration, onComplete, label }: TimerProps) {
-  const [secondsLeft, setSecondsLeft] = useState(duration);
+  // 初期値を固定して持っておく
+  const initialDuration = duration;
+  const [secondsLeft, setSecondsLeft] = useState(initialDuration);
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
@@ -49,6 +51,16 @@ export default function Timer({ duration, onComplete, label }: TimerProps) {
      >
        {isPaused ? 'Resume' : 'Pause'}
      </button>
+     <button
+          className="px-3 py-1 border rounded hover:bg-gray-100"
+          onClick={() => {
+            // リセットすると同時に一時停止は解除
+            setSecondsLeft(initialDuration);
+            setIsPaused(false);
+          }}
+        >
+          Reset
+        </button>
     </div>
   );
 }
